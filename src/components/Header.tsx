@@ -85,10 +85,11 @@ const Header = () => {
                   <Label htmlFor="seller-mode" className="text-sm font-medium">Seller Mode</Label>
                 </div>
               )}
-              <NotificationBell />
+             
+            </div>
+            {isAuthenticated && <NotificationBell />}
               <ModeToggle />
               <Auth />
-            </div>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="md:hidden">
@@ -107,15 +108,7 @@ const Header = () => {
                     </div>
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem>
-                  <NotificationBell />
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <ModeToggle />
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Auth />
-                </DropdownMenuItem>
+               
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

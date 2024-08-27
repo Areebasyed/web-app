@@ -1,5 +1,6 @@
 // components/landing/Hero.tsx
 import { Button } from "@/components/ui/button"
+import { SignInButton } from "@clerk/nextjs"
 
 export default function Hero() {
   return (
@@ -8,7 +9,9 @@ export default function Hero() {
         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Your Skills, Your Market</h1>
         <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">BuildXport connects talented individuals with those seeking services. Create, sell, or buy services with ease and security.</p>
         <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-          <Button size="lg">Get Started</Button>
+         <Button className="bg-blue-500 hover:bg-blue-600 text-white dark:bg-blue-600 dark:hover:bg-blue-700" size={"lg"} variant={"outline"} asChild>
+         <SignInButton mode='modal' />
+         </Button>
           <Button size="lg" variant="outline">Learn More</Button>
         </div>
       </div>
