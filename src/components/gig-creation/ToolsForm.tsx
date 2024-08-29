@@ -62,6 +62,7 @@ export default function ToolsForm() {
 
 
   const handleAddTool = () => {
+    console.log(tool)
     if (tool.name && tool.quantity > 0 && tool.rentalPricePerTool > 0 && tool.imageId) {
       
       addTool(tool)
@@ -105,7 +106,7 @@ export default function ToolsForm() {
           <Label htmlFor="name">Tool Name</Label>
             <Select onValueChange={handleToolSelect}>
               <SelectTrigger>
-                <SelectValue placeholder="Select a resource" />
+                <SelectValue placeholder="Select a tool" />
               </SelectTrigger>
               <SelectContent>
                 {CONSTRUCTION_TOOLS.map((res) => (
@@ -117,7 +118,7 @@ export default function ToolsForm() {
             </Select>
           </div>
           <div className="col-span-2">
-            <Label>Resource Image</Label>
+            <Label>Tool Image</Label>
             {!tool.imageId && (
               <div {...getRootProps()} className="border-2 border-dashed rounded-md p-4 text-center cursor-pointer">
                 <input {...getInputProps()} />

@@ -37,7 +37,7 @@ export const getImageUrl = query({
 			  .withIndex("by_tokenIdentifier", (q) => q.eq("tokenIdentifier", identity.tokenIdentifier))
 			  .unique();
   
-		  if (!user || user.Asseller) {
+		  if (!user) {
 			  throw new ConvexError("Unauthorized");
 		  }
   

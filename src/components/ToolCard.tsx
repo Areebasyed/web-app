@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { useQuery } from 'convex/react'
+import { useConvexAuth, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { Id } from '../../convex/_generated/dataModel'
+import { useMe } from '@/store/useME'
 
 interface Tool {
   name: string
@@ -14,14 +15,24 @@ interface Tool {
 }
 
 export function ToolCard({ tool }: { tool: Tool }) {
-  
+  console.log(tool)
+  const {me} = useMe()
+  const {isAuthenticated,isLoading}= useConvexAuth();
   const [isImageOpen, setIsImageOpen] = useState(false)
   const [imageUrl, setImageUrl] = useState<string>('')
-  const getImageUrl = useQuery(api.files.getImageUrl, { imageId: tool?.imageId as Id<"_storage"> })
+  console.log({isAuthenticated,isLoading})
+
+  
+
+  const getImageUrl = useQuery(api.files.getImageUrl, isAuthenticated ? {imageId:tool?.imageId as Id<"_storage">} : 'skip')
+
+
+
 
   const handleViewImage = async () => {
     if (tool.imageId) {
       if (getImageUrl) {
+      
         setImageUrl(getImageUrl)
         setIsImageOpen(true)
       }

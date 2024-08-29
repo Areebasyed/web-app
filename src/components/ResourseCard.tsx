@@ -16,6 +16,7 @@ interface Resource {
 }
 
 export function ResourceCard({ resource }: { resource: Resource }) {
+  console.log(resource)
   const [isImageOpen, setIsImageOpen] = useState(false)
   const [imageUrl, setImageUrl] = useState<string>('')
   const getImageUrl = useQuery(api.files.getImageUrl, { imageId: resource?.imageId as Id<"_storage"> })
