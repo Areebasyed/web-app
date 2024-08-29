@@ -10,6 +10,8 @@ import { useMutation } from 'convex/react';
 import { useToast } from "@/components/ui/use-toast";
 import { Id } from '../../convex/_generated/dataModel';
 import { api } from '../../convex/_generated/api';
+import { useRouter } from 'next/navigation';
+
 
 interface AssignOrderDialogProps {
   gig: {
@@ -35,6 +37,7 @@ export function AssignOrderDialog({ gig, buyerId }: AssignOrderDialogProps) {
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [paymentMethod, setPaymentMethod] = useState<string>('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const router=useRouter();
 
 
   const { toast } = useToast();
@@ -82,6 +85,8 @@ export function AssignOrderDialog({ gig, buyerId }: AssignOrderDialogProps) {
         description: "Your assignment request has been sent to the seller.",
       });
       setIsDialogOpen(false);
+      router.replace("/")
+      router.refresh();
     } catch (error) {
       toast({
         title: "Error",

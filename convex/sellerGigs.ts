@@ -15,12 +15,14 @@ export const createGig = mutation({
         quantity: v.number(),
         unit: v.string(),
         pricePerResource: v.number(),
+        imageId: v.optional(v.id("_storage")),
         
       })),
       tools: v.array(v.object({
         name: v.string(),
         quantity: v.number(),
         rentalPricePerTool: v.number(),
+        imageId: v.optional(v.id("_storage")),
       })),
       packages: v.array(v.object({
         name: v.string(),

@@ -49,11 +49,12 @@ const Header = () => {
 
   const handleModeToggle = async (checked: boolean) => {
     if (user) {
-      await makeUserSeller({ toggle: checked });
       if (path !== "/") {
         router.replace("/");
         router.refresh();
       }
+      await makeUserSeller({ toggle: checked });
+      
     }
   };
 

@@ -14,6 +14,7 @@ interface Tool {
 }
 
 export function ToolCard({ tool }: { tool: Tool }) {
+  
   const [isImageOpen, setIsImageOpen] = useState(false)
   const [imageUrl, setImageUrl] = useState<string>('')
   const getImageUrl = useQuery(api.files.getImageUrl, { imageId: tool?.imageId as Id<"_storage"> })
