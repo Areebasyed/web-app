@@ -6,12 +6,13 @@ import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useMutation } from 'convex/react';
-
 import { useToast } from "@/components/ui/use-toast";
 import { Id } from '../../convex/_generated/dataModel';
 import { api } from '../../convex/_generated/api';
 import { useRouter } from 'next/navigation';
-
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 
 interface AssignOrderDialogProps {
   gig: {
@@ -37,17 +38,14 @@ export function AssignOrderDialog({ gig, buyerId }: AssignOrderDialogProps) {
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [paymentMethod, setPaymentMethod] = useState<string>('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const router=useRouter();
-
+  const router = useRouter();
 
   const { toast } = useToast();
-  let packages :string[] = [];
-   packages = gig.completeService?.packages.map((p) => p.name) || []; 
- 
+  const packages = gig.completeService?.packages.map((p) => p.name) || [];
 
-   const assignContractOrderRequest = useMutation(api.orders.assignContractOrderRequest);
-   const handleSubmit = async () => {
-    console.log({ selectedPackage, startDate, endDate, paymentMethod });
+  const assignContractOrderRequest = useMutation(api.orders.assignContractOrderRequest);
+
+  const handleSubmit = async () => {
     if (!selectedPackage || !startDate || !endDate || !paymentMethod) {
       toast({
         title: "Incomplete Form",
@@ -101,7 +99,7 @@ export function AssignOrderDialog({ gig, buyerId }: AssignOrderDialogProps) {
       <DialogTrigger asChild>
         <Button className="mt-4">Assign Order</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] max-w-[90vw]">
         <DialogHeader>
           <DialogTitle>Assign Order Request</DialogTitle>
         </DialogHeader>
@@ -110,43 +108,69 @@ export function AssignOrderDialog({ gig, buyerId }: AssignOrderDialogProps) {
             <Label htmlFor="package" className="text-right">
               Package
             </Label>
-            
-<Select value={selectedPackage} onValueChange={setSelectedPackage}>
-  <SelectTrigger className="w-[180px]">
-    <SelectValue placeholder="Select a Package" />
-  </SelectTrigger>
-  <SelectContent>
-           {packages.map((pkg) => (
-              <SelectItem key={pkg} value={pkg}>
-                {pkg}
-              </SelectItem>
-            ))  }
-  </SelectContent>
-</Select>
-
+            <div className="col-span-3">
+              <Select value={selectedPackage} onValueChange={setSelectedPackage}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a Package" />
+                </SelectTrigger>
+                <SelectContent>
+                  {packages.map((pkg) => (
+                    <SelectItem key={pkg} value={pkg}>
+                      {pkg}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">Start Date</Label>
             <div className="col-span-3">
-              <Calendar
-                mode="single"
-                selected={startDate}
-                onSelect={setStartDate}
-                disabled={(date) => date < new Date()}
-                className="rounded-md border"
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={`w-full justify-start text-left font-normal ${!startDate && "text-muted-foreground"}`}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {startDate ? format(startDate, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={startDate}
+                    onSelect={setStartDate}
+                    disabled={(date) => date < new Date()}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">End Date</Label>
             <div className="col-span-3">
-              <Calendar
-                mode="single"
-                selected={endDate}
-                onSelect={setEndDate}
-                disabled={(date) => date < (startDate || new Date())}
-                className="rounded-md border"
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={`w-full justify-start text-left font-normal ${!endDate && "text-muted-foreground"}`}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {endDate ? format(endDate, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={endDate}
+                    onSelect={setEndDate}
+                    disabled={(date) => date < (startDate || new Date())}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -163,7 +187,7 @@ export function AssignOrderDialog({ gig, buyerId }: AssignOrderDialogProps) {
             </RadioGroup>
           </div>
         </div>
-        <Button onClick={handleSubmit}>Send Approval Request to Seller</Button>
+        <Button onClick={handleSubmit} className="w-full">Send Approval Request to Seller</Button>
       </DialogContent>
     </Dialog>
   );

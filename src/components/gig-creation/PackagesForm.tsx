@@ -19,6 +19,7 @@ export default function PackagesForm() {
   const { addPackage, packages } = useGigStore()
 
   const handleAddPackage = () => {
+    if(!pkg.name || !pkg.teamSize || !pkg.resourceCount || !pkg.toolCount || !pkg.budget || !pkg.deliveryTime) return
     addPackage(pkg)
     setPkg({
       name: '',
