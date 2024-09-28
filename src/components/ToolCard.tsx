@@ -1,11 +1,8 @@
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { useConvexAuth, useQuery } from 'convex/react'
+import { useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { Id } from '../../convex/_generated/dataModel'
-import { useMe } from '@/store/useME'
 
 interface Tool {
   name: string
@@ -15,62 +12,32 @@ interface Tool {
 }
 
 export function ToolCard({ tool }: { tool: Tool }) {
-  console.log(tool)
-  const {me} = useMe()
-  const {isAuthenticated,isLoading}= useConvexAuth();
-  const [isImageOpen, setIsImageOpen] = useState(false)
-  const [imageUrl, setImageUrl] = useState<string>('')
-  console.log({isAuthenticated,isLoading})
-
-  
-
-  const getImageUrl = useQuery(api.files.getImageUrl, isAuthenticated ? {imageId:tool?.imageId as Id<"_storage">} : 'skip')
-
-
-
-
-  const handleViewImage = async () => {
-    if (tool.imageId) {
-      if (getImageUrl) {
-      
-        setImageUrl(getImageUrl)
-        setIsImageOpen(true)
-      }
-    }
-  }
+  const getImageUrl = useQuery(api.files.getImageUrl, { imageId: tool?.imageId as Id<"_storage"> })
 
   return (
-    <Card className="w-full">
+    <Card className="w-full h-full flex flex-col">
       <CardHeader>
         <CardTitle className="text-lg font-semibold">{tool.name}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          Available: {tool.quantity}
-        </p>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          Rental Price: ${tool.rentalPricePerTool} per tool
-        </p>
-        {tool?.imageId && (
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="mt-2" 
-            onClick={handleViewImage}
-          >
-            View Image
-          </Button>
-        )}
+      <CardContent className="flex-grow flex flex-col">
+        {/* {getImageUrl && (
+          <div className="mb-4 flex-grow">
+            <img 
+              src={getImageUrl} 
+              alt={tool.name} 
+              className="w-full h-48 object-cover rounded-md"
+            />
+          </div>
+        )} */}
+        <div>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Available: {tool.quantity}
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Rental Price: ${tool.rentalPricePerTool} per tool
+          </p>
+        </div>
       </CardContent>
-
-      <Dialog open={isImageOpen} onOpenChange={setIsImageOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{tool.name}</DialogTitle>
-          </DialogHeader>
-          {imageUrl && <img src={imageUrl} alt={tool.name} className="w-full h-auto" />}
-        </DialogContent>
-      </Dialog>
     </Card>
   )
 }
