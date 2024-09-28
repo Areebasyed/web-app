@@ -9,6 +9,7 @@ export interface SellerGig {
   title: string
   _creationTime: number;
   description: string
+  location: string
   serviceType: "complete" | "resources" | "tools"
   completeService?: {
     teamMembers: string[]
