@@ -17,6 +17,7 @@ export default defineSchema({
 	  sellerGigs: defineTable({
 		userId: v.id("users"),
 		title: v.string(),
+		location: v.string(),
 		description: v.string(),
 		serviceType: v.union(v.literal("complete"), v.literal("resources"), v.literal("tools")),
 		completeService: v.optional(v.object({

@@ -67,15 +67,7 @@ export default function GigPage({ params }: { params: { id: string } }) {
           </div>
         </CardContent>
         <CardFooter className="flex flex-wrap justify-end gap-4">
-          {isSeller && (
-            <Button
-              variant="outline"
-              onClick={() => router.push(`/edit-gig/${gigId}`)}
-              className="bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
-            >
-              <Edit className="mr-2 h-4 w-4" /> Edit Gig
-            </Button>
-          )}
+          
           {!isSeller && (gigChat === undefined || gigChat === null) && (
             <Button 
               variant="outline" 
@@ -140,9 +132,10 @@ function renderServiceDetails(gig: SellerGig) {
       )
     case 'resources':
       return (
-        <ServiceResourceSection 
+    <ServiceResourceSection 
   title="Available Resources" 
   items={gig.resourceService}
+
     />
       )
     case 'tools':

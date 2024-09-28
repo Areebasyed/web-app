@@ -36,6 +36,7 @@ interface Package {
 
 interface BasicInfo {
   title: string
+  location: string
   description: string
   serviceType: ServiceType
 }
@@ -68,6 +69,7 @@ const initialState: GigState = {
   basicInfo: {
     title: '',
     description: '',
+    location: '',
     serviceType: 'complete',
   },
   teamMembers: [],
@@ -81,6 +83,7 @@ export interface GigSubmissionData {
   userId: Id<"users">
   title: string
   description: string
+  location: string
   serviceType: ServiceType
   completeService?: {
     teamMembers: string[]
@@ -143,6 +146,7 @@ export const useGigStore = create<GigState & GigActions>()(
         const submissionData: GigSubmissionData = {
           userId: 'user-id-here' as any, // "set as dummy add at during submission"
           title: state.basicInfo.title,
+          location: state.basicInfo.location,
           description: state.basicInfo.description,
           serviceType: state.basicInfo.serviceType,
          

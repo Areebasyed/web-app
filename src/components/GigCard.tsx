@@ -35,7 +35,6 @@ export function GigCard({ gig }: { gig: SellerGig }) {
           )}
           {gig.serviceType === 'tools' && (
             <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-            
               {gig.toolService?.length} tools
             </div>
           )}

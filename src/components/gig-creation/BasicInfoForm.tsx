@@ -10,6 +10,9 @@ export default function BasicInfoForm() {
   const { title, description } = basicInfo
   const setTitle = (title: string) => setBasicInfo({ ...basicInfo, title })
   const setDescription = (description: string) => setBasicInfo({ ...basicInfo, description })
+  const setLocation = (location:string) => setBasicInfo({ ...basicInfo, location })
+
+
 
   return (
     <Card>
@@ -35,6 +38,15 @@ export default function BasicInfoForm() {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Describe your service in detail..."
             rows={5}
+          />
+        </div>
+        <div>
+          <Label htmlFor="title">LOCATION</Label>
+          <Input
+            id="Location"
+            value={basicInfo.location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="Add location of your service"
           />
         </div>
       </CardContent>

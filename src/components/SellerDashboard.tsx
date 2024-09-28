@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { GigSkeleton } from './GigSkelton'
 
 export default function SellerDashboard({ isSeller, userId }: { isSeller: boolean, userId: Id<"users"> }) {
-  console.log({ isSeller, userId } +"in seller dashoboard")
+ 
   const [filter, setFilter] = useState<'all' | 'complete' | 'resources' | 'tools'>('all')
   const gigs = useQuery(api.sellerGigs.getSellerGigs, { userId })
 
