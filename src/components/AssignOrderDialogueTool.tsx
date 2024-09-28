@@ -132,8 +132,8 @@ export function AssignOrderToolDialog({ gig, buyerId }: AssignOrderToolDialogPro
             <Input
               id="quantity"
               type="number"
-              min="1"
-              max={tools.find(t => t.name === selectedTool)?.quantity || 1}
+              // min="1"
+              // max={tools.find(t => t.name === selectedTool)?.quantity || 1}
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
               className="col-span-3"

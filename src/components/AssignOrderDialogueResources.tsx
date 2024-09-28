@@ -126,8 +126,8 @@ export function AssignOrderResourceDialog({ gig, buyerId }: AssignOrderResourceD
               id="quantity"
               type="number"
               value={quantity}
-              min="1"
-              max={resources.find(r => r.name === selectedResource)?.quantity || 1}
+              // min="0"
+              // max={resources.find(r => r.name === selectedResource)?.quantity || 1}
               onChange={(e) => setQuantity(Number(e.target.value))}
               className="col-span-3"
             />
