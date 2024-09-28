@@ -1,11 +1,8 @@
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import {  useQuery } from 'convex/react'
+import { useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { Id } from '../../convex/_generated/dataModel'
-
 
 interface Resource {
   name: string
@@ -16,52 +13,32 @@ interface Resource {
 }
 
 export function ResourceCard({ resource }: { resource: Resource }) {
-  console.log(resource)
-  const [isImageOpen, setIsImageOpen] = useState(false)
-  const [imageUrl, setImageUrl] = useState<string>('')
   const getImageUrl = useQuery(api.files.getImageUrl, { imageId: resource?.imageId as Id<"_storage"> })
 
-  const handleViewImage = async () => {
-    if (resource.imageId) {
-       if(getImageUrl){
-        setImageUrl(getImageUrl)
-          setIsImageOpen(true)
-       }
-    }
-  }
-
   return (
-    <Card className="w-full">
+    <Card className="w-full h-full flex flex-col">
       <CardHeader>
         <CardTitle className="text-lg font-semibold">{resource.name}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          Available: {resource.quantity} {resource.unit}
-        </p>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          Price: ${resource.pricePerResource} per {resource.unit}
-        </p>
-        {resource?.imageId && (
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="mt-2" 
-            onClick={handleViewImage}
-          >
-            View Image
-          </Button>
+      <CardContent className="flex-grow flex flex-col">
+        {getImageUrl && (
+          <div className="mb-4 flex-grow">
+            <img 
+              src={getImageUrl} 
+              alt={resource.name} 
+              className="object-cover rounded-md"
+            />
+          </div>
         )}
+        <div>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Available: {resource.quantity} {resource.unit}
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Price: ${resource.pricePerResource} per {resource.unit}
+          </p>
+        </div>
       </CardContent>
-
-      <Dialog open={isImageOpen} onOpenChange={setIsImageOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{resource.name}</DialogTitle>
-          </DialogHeader>
-          {imageUrl && <img src={imageUrl} alt={resource.name} className="w-full h-auto" />}
-        </DialogContent>
-      </Dialog>
     </Card>
   )
 }
