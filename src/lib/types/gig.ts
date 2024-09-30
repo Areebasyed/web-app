@@ -18,11 +18,13 @@ export interface SellerGig {
       quantity: number
       unit: string
       pricePerResource: number
+      imageId?: Id<"_storage">
     }[]
     tools: {
       name: string
       quantity: number
       rentalPricePerTool: number
+      imageId?: Id<"_storage">
     }[]
     packages: {
       name: string

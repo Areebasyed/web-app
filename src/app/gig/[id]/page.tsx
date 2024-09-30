@@ -18,16 +18,18 @@ import { AssignOrderResourceDialog } from '@/components/AssignOrderDialogueResou
 import { AssignOrderToolDialog } from '@/components/AssignOrderDialogueTool'
 import { ResourceCard, ServiceResourceSection } from '@/components/ResourseCard'
 import { ServiceToolSection } from '@/components/ToolCard'
+import { ServiceCompleteSection } from '@/components/ServiceCompleteSection'
 
 export default function GigPage({ params }: { params: { id: string } }) {
   const searchParams = useSearchParams()
-  const router = useRouter()
+ 
   const { me } = useMe()
   const { toast } = useToast()
   const isSeller = searchParams.get('isSeller') === 'true' ? true : false
   const gigId = params.id as Id<"sellerGigs">
 
   const gig: SellerGig | undefined = useQuery(api.sellerGigs.getGigById, { gigId: gigId })
+  
   const gigChat = useQuery(api.chat.getChatByGigId, { gigId: gigId })
   const createChat = useMutation(api.chat.createChat)
 
@@ -98,38 +100,9 @@ export default function GigPage({ params }: { params: { id: string } }) {
 function renderServiceDetails(gig: SellerGig) {
   switch (gig.serviceType) {
     case 'complete':
-      return (
-        <div className="space-y-4">
-          <ServiceSection title="Team Members" items={gig.completeService?.teamMembers} />
-          <ServiceSection 
-            title="Resources" 
-            items={gig.completeService?.resources.map(r => `${r.name}: ${r.quantity} ${r.unit} ($${r.pricePerResource} per ${r.unit})`)} 
-          />
-          <ServiceSection 
-            title="Tools" 
-            items={gig.completeService?.tools.map(t => `${t.name}: ${t.quantity} available ($${t.rentalPricePerTool} rental per tool)`)} 
-          />
-          <div>
-            <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-gray-200">Packages</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {gig.completeService?.packages.map((pkg, index) => (
-                <Card key={index} className="bg-white dark:bg-gray-700">
-                  <CardHeader>
-                    <CardTitle className="text-lg text-gray-800 dark:text-gray-200">{pkg.name}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-gray-700 dark:text-gray-300">
-                    <p>Team Size: {pkg.teamSize}</p>
-                    <p>Resources: {pkg.resourceCount}</p>
-                    <p>Tools: {pkg.toolCount}</p>
-                    <p>Budget: ${pkg.budget}</p>
-                    <p>Delivery Time: {pkg.deliveryTime} days</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-      )
+  return <ServiceCompleteSection completeService={gig?.completeService } />
+    
+      
     case 'resources':
       return (
     <ServiceResourceSection 
