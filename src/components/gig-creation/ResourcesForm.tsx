@@ -54,7 +54,7 @@ export default function ResourcesForm() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, maxFiles: 1 })
 
   const handleAddResource = () => {
-    console.log(resource)
+    
     if (resource.name && resource.quantity > 0 && resource.unit && resource.pricePerResource > 0 && resource.imageId) {
       addResource(resource)
       setResource({ name: '', quantity: 0, unit: '', pricePerResource: 0, imageId: '' as Id<"_storage"> })
@@ -139,6 +139,7 @@ export default function ResourcesForm() {
               required
               id="quantity"
               type="number"
+              min={0}
               value={resource.quantity}
               onChange={(e) => setResource({ ...resource, quantity: parseInt(e.target.value) || 0 })}
               placeholder="e.g., 100"
@@ -161,6 +162,7 @@ export default function ResourcesForm() {
               id="price"
               required
               type="number"
+              min={0}
               value={resource.pricePerResource}
               onChange={(e) => setResource({ ...resource, pricePerResource: parseFloat(e.target.value) || 0 })}
               placeholder="Per per resource"

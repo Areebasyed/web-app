@@ -40,6 +40,7 @@ export function CreateSellerGigClient() {
     try {
       const gigData = submitGig()
       gigData.userId = userId
+      // console.log(JSON.stringify(gigData))
       await createGig(gigData)
       
       

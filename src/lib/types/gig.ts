@@ -12,7 +12,10 @@ export interface SellerGig {
   location: string
   serviceType: "complete" | "resources" | "tools"
   completeService?: {
-    teamMembers: string[]
+    teamMembers: {
+      name: string
+      experience: number
+    }[]
     resources: {
       name: string
       quantity: number

@@ -11,18 +11,23 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Trash2, Plus } from 'lucide-react'
 import { useToast } from "@/components/ui/use-toast"
 
+interface Membor {
+  name: string
+  experience: number
+}
+
 export default function TeamMembersForm() {
-  const [newMember, setNewMember] = useState('')
+  const [newMember, setNewMember] = useState<Membor>({name:'',experience:0});
   const { teamMembers, setTeamMembers } = useGigStore()
   const { toast } = useToast()
 
-  const handleAddMember = () => {
-    if (newMember.trim()) {
-      setTeamMembers([...teamMembers, { name: newMember.trim() }])
-      setNewMember('')
+  const handleAddMember = (newMembor: Membor) => {
+    if (newMember.name && newMember.experience) {
+      setTeamMembers([...teamMembers, newMember])
+      setNewMember({name: '', experience: 0})
       toast({
         title: "Team member added",
-        description: `${newMember.trim()} has been added to the team.`,
+        description: `${newMember.name} has been added to the team.`,
       })
     }
   }
@@ -44,19 +49,31 @@ export default function TeamMembersForm() {
       <CardContent className="space-y-6">
         <div className="flex items-end space-x-2">
           <div className="flex-grow">
-            <Label htmlFor="newMember">New Team Member</Label>
+            <Label htmlFor="newMember">New Team Member name</Label>
             <Input
               id="newMember"
-              value={newMember}
-              onChange={(e) => setNewMember(e.target.value)}
+              value={newMember.name}
+              onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
               placeholder="Enter team member name"
             />
           </div>
-          <Button onClick={handleAddMember}>
+
+          <div className='flex-grow'>
+          <Label htmlFor="newMember">Add experience in years</Label>
+            <Input
+              id="experience"
+              min={0}
+              type="number"
+              value={newMember.experience}
+              onChange={(e) => setNewMember({ ...newMember, experience: Number(e.target.value) })}
+              placeholder="Enter team member name"
+            />
+          </div>
+          </div>
+          <Button onClick={() => handleAddMember(newMember)}>
             <Plus className="mr-2 h-4 w-4" /> Add Member
           </Button>
-        </div>
-
+        
         {teamMembers.length > 0 && (
           <Table>
             <TableHeader>

@@ -62,7 +62,7 @@ export default function ToolsForm() {
 
 
   const handleAddTool = () => {
-    console.log(tool)
+    
     if (tool.name && tool.quantity > 0 && tool.rentalPricePerTool > 0 && tool.imageId) {
       
       addTool(tool)
@@ -152,6 +152,7 @@ export default function ToolsForm() {
             <Input
               id="quantity"
               type="number"
+              min={0}
               value={tool.quantity}
               onChange={(e) => setTool({ ...tool, quantity: parseInt(e.target.value) || 0 })}
               placeholder="e.g., 5"
@@ -162,6 +163,7 @@ export default function ToolsForm() {
             <Input
               id="rentalPrice"
               type="number"
+              min={0}
               value={tool.rentalPricePerTool}
               onChange={(e) => setTool({ ...tool, rentalPricePerTool: parseFloat(e.target.value) || 0 })}
               placeholder="Price Per tool"

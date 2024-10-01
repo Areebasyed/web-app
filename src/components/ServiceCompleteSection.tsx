@@ -7,7 +7,10 @@ import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface CompleteService {
-    teamMembers: string[];
+    teamMembers: {
+      name: string;
+      experience: number;
+    }[],
     resources: {
         name: string;
         quantity: number;
@@ -85,10 +88,17 @@ export const ServiceCompleteSection: React.FC<ServiceCompleteSectionProps> = ({ 
         <h2 className="text-2xl font-bold mb-4">Team Members</h2>
         <div className="flex flex-wrap gap-4">
           {completeService?.teamMembers.map((member, index) => (
-            <Avatar key={index} className="h-12 w-12">
-              <AvatarFallback>{member.slice(0, 2).toUpperCase()}</AvatarFallback>
-            </Avatar>
-          ))}
+          
+          
+            <Card key={index} className="h-full">
+              <CardHeader className="p-4">
+                <CardTitle className="text-lg">{member.name}</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <p className="text-sm">Experience: {member.experience} years</p>
+              </CardContent>
+            </Card>
+        ))}
         </div>
       </section>
 

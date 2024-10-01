@@ -48,6 +48,7 @@ export default function PackagesForm() {
         <Input
           id="teamSize"
           type="number"
+          min={0}
           value={pkg.teamSize}
           onChange={(e) => setPkg({ ...pkg, teamSize: parseInt(e.target.value) || 0 })}
           placeholder="Number of team members"
@@ -58,6 +59,7 @@ export default function PackagesForm() {
         <Input
           id="resourceCount"
           type="number"
+          min={0}
           value={pkg.resourceCount}
           onChange={(e) => setPkg({ ...pkg, resourceCount: parseInt(e.target.value) || 0 })}
           placeholder="Number of resources included"
@@ -68,6 +70,7 @@ export default function PackagesForm() {
         <Input
           id="toolCount"
           type="number"
+          min={0}
           value={pkg.toolCount}
           onChange={(e) => setPkg({ ...pkg, toolCount: parseInt(e.target.value) || 0 })}
           placeholder="Number of tools included"
@@ -78,6 +81,7 @@ export default function PackagesForm() {
         <Input
           id="budget"
           type="number"
+          min={0}
           value={pkg.budget}
           onChange={(e) => setPkg({ ...pkg, budget: parseFloat(e.target.value) || 0 })}
           placeholder="Package price in your currency"
@@ -88,6 +92,7 @@ export default function PackagesForm() {
         <Input
           id="deliveryTime"
           type="number"
+          min={0}
           value={pkg.deliveryTime}
           onChange={(e) => setPkg({ ...pkg, deliveryTime: parseInt(e.target.value) || 0 })}
           placeholder="Number of days to deliver"

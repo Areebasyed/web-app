@@ -7,7 +7,7 @@ import { Label } from '../ui/label'
 
 export default function BasicInfoForm() {
   const {basicInfo,setBasicInfo  } = useGigStore()
-  const { title, description } = basicInfo
+  const {  title, description } = basicInfo
   const setTitle = (title: string) => setBasicInfo({ ...basicInfo, title })
   const setDescription = (description: string) => setBasicInfo({ ...basicInfo, description })
   const setLocation = (location:string) => setBasicInfo({ ...basicInfo, location })

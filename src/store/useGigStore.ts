@@ -7,6 +7,7 @@ export type ServiceType = 'complete' | 'resources' | 'tools'
 
 interface TeamMember {
   name: string
+  experience: number
 }
 
 interface Resource {
@@ -86,7 +87,7 @@ export interface GigSubmissionData {
   location: string
   serviceType: ServiceType
   completeService?: {
-    teamMembers: string[]
+    teamMembers: TeamMember[]
     resources: Resource[]
     tools: Tool[]
     packages: Package[]
@@ -154,7 +155,7 @@ export const useGigStore = create<GigState & GigActions>()(
 
         if (state.basicInfo.serviceType === 'complete') {
           submissionData.completeService = {
-            teamMembers: state.teamMembers.map(member => member.name),
+            teamMembers: state.teamMembers.map(member => member),
             resources: state.resources,
             tools: state.tools,
             packages: state.packages,
