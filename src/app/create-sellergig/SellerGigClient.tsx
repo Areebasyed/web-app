@@ -8,6 +8,7 @@ import BasicInfoForm from '@/components/gig-creation/BasicInfoForm'
 import TeamMembersForm from '@/components/gig-creation/TeamMembersForm'
 import ResourcesForm from '@/components/gig-creation/ResourcesForm'
 import ToolsForm from '@/components/gig-creation/ToolsForm'
+import ServiceImagesForm from '@/components/gig-creation/ServiceImageForm'
 import PackagesForm from '@/components/gig-creation/PackagesForm'
 import { Id } from '../../../convex/_generated/dataModel'
 import { useMutation } from 'convex/react'
@@ -63,7 +64,7 @@ export function CreateSellerGigClient() {
     const commonSteps = [IntroductionStep, BasicInfoForm]
     switch (basicInfo.serviceType) {
       case 'complete':
-        return [...commonSteps, TeamMembersForm, ResourcesForm, ToolsForm, PackagesForm]
+        return [...commonSteps,ServiceImagesForm, TeamMembersForm, ResourcesForm, ToolsForm, PackagesForm]
       case 'resources':
         return [...commonSteps, ResourcesForm]
       case 'tools':

@@ -63,7 +63,7 @@ export default function ServiceImagesForm() {
     setBasicInfo({
       completeService: {
         ...basicInfo.completeService,
-        serviceImages: basicInfo.completeService?.serviceImages.filter((_, i) => i !== index)
+        serviceImages: basicInfo?.completeService?.serviceImages?.filter((_, i) => i !== index)
       }
     })
     toast({

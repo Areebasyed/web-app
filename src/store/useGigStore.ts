@@ -97,12 +97,11 @@ export interface GigSubmissionData {
   location: string
   serviceType: ServiceType
   completeService?: {
-    serviceImages: Id<"_storage">[]
     teamMembers: TeamMember[]
     resources: Resource[]
     tools: Tool[]
-
     packages: Package[]
+    serviceImages: Id<"_storage">[]
   }
   resourceService?: Resource[]
   toolService?: Tool[]
@@ -115,7 +114,19 @@ export const useGigStore = create<GigState & GigActions>()(
       ...initialState,
       setBasicInfo: (info) =>
         set((state) => ({
-          basicInfo: { ...state.basicInfo, ...info },
+          basicInfo: { ...state.basicInfo, ...info,   completeService: info.completeService
+            ? {
+                ...state.basicInfo.completeService,
+                ...info.completeService,
+                serviceImages: [
+                  ...(state.basicInfo.completeService?.serviceImages || []),
+                  ...(info.completeService.serviceImages || []),
+                ],
+              }
+            : state.basicInfo.completeService
+           },
+
+          
         })),
       setTeamMembers: (members) => {
         set({ teamMembers: members })
