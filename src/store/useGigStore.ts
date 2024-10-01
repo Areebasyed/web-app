@@ -23,12 +23,10 @@ interface Tool {
   quantity: number
   rentalPricePerTool: number
   imageId?: Id<"_storage">
-  
 }
 
 interface Package {
   name: string
-
   teamSize: number
   resourceCount: number
   toolCount: number
@@ -36,18 +34,20 @@ interface Package {
   deliveryTime: number
 }
 
+export interface CompleteService {
+  teamMembers: TeamMember[]
+  resources: Resource[]
+  tools: Tool[]
+  packages: Package[]
+  serviceImages: Id<"_storage">[]
+}
+
 interface BasicInfo {
   title: string
   location: string
   description: string
   serviceType: ServiceType
-  completeService?: {
-    teamMembers: TeamMember[]
-    resources: Resource[]
-    tools: Tool[]
-    packages: Package[]
-    serviceImages: Id<"_storage">[]
-  }
+  completeService?: CompleteService
   resourceService?: Resource[]
   toolService?: Tool[]
 }
@@ -82,6 +82,13 @@ const initialState: GigState = {
     description: '',
     location: '',
     serviceType: 'complete',
+    completeService: {
+      teamMembers: [],
+      resources: [],
+      tools: [],
+      packages: [],
+      serviceImages: [],
+    },
   },
   teamMembers: [],
   resources: [],
@@ -96,16 +103,9 @@ export interface GigSubmissionData {
   description: string
   location: string
   serviceType: ServiceType
-  completeService?: {
-    teamMembers: TeamMember[]
-    resources: Resource[]
-    tools: Tool[]
-    packages: Package[]
-    serviceImages: Id<"_storage">[]
-  }
+  completeService?: CompleteService
   resourceService?: Resource[]
   toolService?: Tool[]
- 
 }
 
 export const useGigStore = create<GigState & GigActions>()(
@@ -114,54 +114,102 @@ export const useGigStore = create<GigState & GigActions>()(
       ...initialState,
       setBasicInfo: (info) =>
         set((state) => ({
-          basicInfo: { ...state.basicInfo, ...info,   completeService: info.completeService
-            ? {
-                ...state.basicInfo.completeService,
-                ...info.completeService,
-                serviceImages: [
-                  ...(state.basicInfo.completeService?.serviceImages || []),
-                  ...(info.completeService.serviceImages || []),
-                ],
-              }
-            : state.basicInfo.completeService
-           },
-
-          
+          basicInfo: {
+            ...state.basicInfo,
+            ...info,
+            completeService: info.completeService
+              ? {
+                  ...state.basicInfo.completeService,
+                  ...info.completeService,
+                  serviceImages: info.completeService.serviceImages || [],
+                }
+              : state.basicInfo.completeService,
+          },
         })),
       setTeamMembers: (members) => {
-        set({ teamMembers: members })
+        set((state) => ({
+          teamMembers: members,
+          basicInfo: {
+            ...state.basicInfo,
+            completeService: {
+              ...state.basicInfo.completeService!,
+              teamMembers: members,
+            },
+          },
+        }))
         toast({ title: 'Team members saved', description: 'Your team members have been updated.' })
       },
       addResource: (resource) => {
         set((state) => ({
           resources: [...state.resources, resource],
+          basicInfo: {
+            ...state.basicInfo,
+            completeService: {
+              ...state.basicInfo.completeService!,
+              resources: [...state.basicInfo.completeService!.resources, resource],
+            },
+          },
         }))
         toast({ title: 'Resource added', description: 'New resource has been added to your gig.' })
       },
-
       removeResource: (name) =>
         set((state) => ({
           resources: state.resources.filter((r) => r.name !== name),
+          basicInfo: {
+            ...state.basicInfo,
+            completeService: {
+              ...state.basicInfo.completeService!,
+              resources: state.basicInfo.completeService!.resources.filter((r) => r.name !== name),
+            },
+          },
         })),
       addTool: (tool) => {
         set((state) => ({
           tools: [...state.tools, tool],
+          basicInfo: {
+            ...state.basicInfo,
+            completeService: {
+              ...state.basicInfo.completeService!,
+              tools: [...state.basicInfo.completeService!.tools, tool],
+            },
+          },
         }))
         toast({ title: 'Tool added', description: 'New tool has been added to your gig.' })
       },
       removeTool: (name) =>
         set((state) => ({
           tools: state.tools.filter((t) => t.name !== name),
+          basicInfo: {
+            ...state.basicInfo,
+            completeService: {
+              ...state.basicInfo.completeService!,
+              tools: state.basicInfo.completeService!.tools.filter((t) => t.name !== name),
+            },
+          },
         })),
       addPackage: (pkg) => {
         set((state) => ({
           packages: [...state.packages, pkg],
+          basicInfo: {
+            ...state.basicInfo,
+            completeService: {
+              ...state.basicInfo.completeService!,
+              packages: [...state.basicInfo.completeService!.packages, pkg],
+            },
+          },
         }))
         toast({ title: 'Package added', description: 'New package has been added to your gig.' })
       },
       removePackage: (name) =>
         set((state) => ({
           packages: state.packages.filter((p) => p.name !== name),
+          basicInfo: {
+            ...state.basicInfo,
+            completeService: {
+              ...state.basicInfo.completeService!,
+              packages: state.basicInfo.completeService!.packages.filter((p) => p.name !== name),
+            },
+          },
         })),
       nextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
       prevStep: () => set((state) => ({ currentStep: state.currentStep - 1 })),
@@ -169,23 +217,15 @@ export const useGigStore = create<GigState & GigActions>()(
       submitGig: () => {
         const state = get()
         const submissionData: GigSubmissionData = {
-          userId: 'user-id-here' as any, // "set as dummy add at during submission"
+          userId: 'user-id-here' as Id<"users">, // "set as dummy add at during submission"
           title: state.basicInfo.title,
           location: state.basicInfo.location,
           description: state.basicInfo.description,
           serviceType: state.basicInfo.serviceType,
-
-         
         }
 
         if (state.basicInfo.serviceType === 'complete') {
-          submissionData.completeService = {
-            serviceImages: state.basicInfo.completeService?.serviceImages || [],
-            teamMembers: state.teamMembers.map(member => member),
-            resources: state.resources,
-            tools: state.tools,
-            packages: state.packages,
-          }
+          submissionData.completeService = state.basicInfo.completeService
         } else if (state.basicInfo.serviceType === 'resources') {
           submissionData.resourceService = state.resources
         } else if (state.basicInfo.serviceType === 'tools') {

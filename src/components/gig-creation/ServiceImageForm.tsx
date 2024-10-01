@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { useGigStore } from '@/store/useGigStore'
+import { CompleteService, useGigStore } from '@/store/useGigStore'
 import { useDropzone } from 'react-dropzone'
 import { useMutation } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
@@ -38,8 +38,8 @@ export default function ServiceImagesForm() {
           setBasicInfo({
             completeService: {
               ...basicInfo.completeService,
-              serviceImages: [...(basicInfo.completeService?.serviceImages || []), storageId as Id<"_storage">]
-            }
+              serviceImages: [...(basicInfo?.completeService?.serviceImages || []), storageId as Id<"_storage">]
+            } as CompleteService
           })
           setUploadProgress(prev => {
             const newProgress = { ...prev }
@@ -63,8 +63,8 @@ export default function ServiceImagesForm() {
     setBasicInfo({
       completeService: {
         ...basicInfo.completeService,
-        serviceImages: basicInfo?.completeService?.serviceImages?.filter((_, i) => i !== index)
-      }
+        serviceImages: basicInfo.completeService?.serviceImages.filter((_, i) => i !== index) || []
+      } as CompleteService
     })
     toast({
       title: 'Image Removed',

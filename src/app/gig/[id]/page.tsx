@@ -2,11 +2,11 @@
 
 import React from 'react'
 import { useMutation, useQuery } from 'convex/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import {  useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Edit, MessageSquare } from 'lucide-react'
+import {  MessageSquare } from 'lucide-react'
 import { Id } from '../../../../convex/_generated/dataModel'
 import { api } from '../../../../convex/_generated/api'
 import { SellerGig } from '@/lib/types/gig';
@@ -16,7 +16,7 @@ import { ChatPopup } from '@/components/ChatPopup'
 import { AssignOrderDialog } from '@/components/AssginOrderDialogue'
 import { AssignOrderResourceDialog } from '@/components/AssignOrderDialogueResources'
 import { AssignOrderToolDialog } from '@/components/AssignOrderDialogueTool'
-import { ResourceCard, ServiceResourceSection } from '@/components/ResourseCard'
+import {  ServiceResourceSection } from '@/components/ResourseCard'
 import { ServiceToolSection } from '@/components/ToolCard'
 import { ServiceCompleteSection } from '@/components/ServiceCompleteSection'
 

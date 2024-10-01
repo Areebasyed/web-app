@@ -15,7 +15,8 @@ export interface SellerGig {
     teamMembers: {
       name: string
       experience: number
-    }[]
+    }[],
+    serviceImages: Id<"_storage">[],
     resources: {
       name: string
       quantity: number

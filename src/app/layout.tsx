@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import "../styles/globals.css";
 import { cn } from "@/lib/utils";
 import ConvexClientProvider from "@/components/ConvexClientProvider";
@@ -7,14 +7,14 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/toaster"
 
-const roboto = Roboto({
+const roboto =Montserrat({
   weight: '400',
   subsets: ['latin-ext'],
 })
 
 export const metadata: Metadata = {
-  title: "Your App Name",
-  description: "Your app description",
+  title: "Build Xpert",
+  description: "Find the best service provider for your needs.",
 };
 
 export default function RootLayout({
