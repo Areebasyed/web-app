@@ -14,6 +14,7 @@ export const createGig = mutation({
         name: v.string(),
         experience: v.number(),
       })),
+      serviceImages: v.array(v.id("_storage")),
       resources: v.array(v.object({
         name: v.string(),
         quantity: v.number(),
@@ -131,7 +132,7 @@ export const getGigById = query({
   },
 })
 
-// convex/gigs.ts
+
 
 
 export const getAllGigsExceptUser = query({

@@ -25,6 +25,7 @@ export default defineSchema({
 			name: v.string(),
 			experience: v.number(),
 		  })),
+		  serviceImages: v.array(v.id("_storage")),
 		  resources: v.array(v.object({
 			name: v.string(),
 			quantity: v.number(),

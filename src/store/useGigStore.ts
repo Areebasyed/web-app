@@ -28,6 +28,7 @@ interface Tool {
 
 interface Package {
   name: string
+
   teamSize: number
   resourceCount: number
   toolCount: number
@@ -40,6 +41,15 @@ interface BasicInfo {
   location: string
   description: string
   serviceType: ServiceType
+  completeService?: {
+    teamMembers: TeamMember[]
+    resources: Resource[]
+    tools: Tool[]
+    packages: Package[]
+    serviceImages: Id<"_storage">[]
+  }
+  resourceService?: Resource[]
+  toolService?: Tool[]
 }
 
 interface GigState {
@@ -87,9 +97,11 @@ export interface GigSubmissionData {
   location: string
   serviceType: ServiceType
   completeService?: {
+    serviceImages: Id<"_storage">[]
     teamMembers: TeamMember[]
     resources: Resource[]
     tools: Tool[]
+
     packages: Package[]
   }
   resourceService?: Resource[]
@@ -115,6 +127,7 @@ export const useGigStore = create<GigState & GigActions>()(
         }))
         toast({ title: 'Resource added', description: 'New resource has been added to your gig.' })
       },
+
       removeResource: (name) =>
         set((state) => ({
           resources: state.resources.filter((r) => r.name !== name),
@@ -150,11 +163,13 @@ export const useGigStore = create<GigState & GigActions>()(
           location: state.basicInfo.location,
           description: state.basicInfo.description,
           serviceType: state.basicInfo.serviceType,
+
          
         }
 
         if (state.basicInfo.serviceType === 'complete') {
           submissionData.completeService = {
+            serviceImages: state.basicInfo.completeService?.serviceImages || [],
             teamMembers: state.teamMembers.map(member => member),
             resources: state.resources,
             tools: state.tools,
@@ -165,7 +180,6 @@ export const useGigStore = create<GigState & GigActions>()(
         } else if (state.basicInfo.serviceType === 'tools') {
           submissionData.toolService = state.tools
         }
-
         return submissionData
       },
     }))

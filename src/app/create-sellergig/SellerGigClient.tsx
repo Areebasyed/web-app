@@ -1,5 +1,4 @@
 'use client'
-
 import { useGigStore } from '@/store/useGigStore'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
@@ -25,7 +24,6 @@ export function CreateSellerGigClient() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
-
   const handleCreateGig = async () => {
     if (!isSeller) {
       toast({
@@ -40,20 +38,13 @@ export function CreateSellerGigClient() {
     try {
       const gigData = submitGig()
       gigData.userId = userId
-      // console.log(JSON.stringify(gigData))
+     
       await createGig(gigData)
-      
-      
-       
-
       toast({
         title: "Success",
         description: "Your service has been created successfully!",
       })
-
-      reset()
-
-      
+      reset()   
       router.push('/')
      
     } catch (err) {
@@ -85,7 +76,6 @@ export function CreateSellerGigClient() {
   const steps = getSteps()
   const totalSteps = steps.length
   const progress = (currentStep / totalSteps) * 100
-
   const CurrentStepComponent = steps[currentStep - 1]
   const isLastStep = currentStep === totalSteps
 
