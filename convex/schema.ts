@@ -21,7 +21,10 @@ export default defineSchema({
 		description: v.string(),
 		serviceType: v.union(v.literal("complete"), v.literal("resources"), v.literal("tools")),
 		completeService: v.optional(v.object({
-		  teamMembers: v.array(v.string()),
+		  teamMembers: v.array(v.object({
+			name: v.string(),
+			experience: v.number(),
+		  })),
 		  resources: v.array(v.object({
 			name: v.string(),
 			quantity: v.number(),
