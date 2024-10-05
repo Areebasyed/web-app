@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat } from 'next/font/google'
+
 import "../styles/globals.css";
 import { cn } from "@/lib/utils";
 import ConvexClientProvider from "@/components/ConvexClientProvider";
@@ -7,11 +7,12 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/toaster"
 
-const roboto =Montserrat({
-  weight: '400',
-  subsets: ['latin-ext'],
-})
+import { Inter } from 'next/font/google'
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+})
 export const metadata: Metadata = {
   title: "Build Xpert",
   description: "Find the best service provider for your needs.",
@@ -25,7 +26,7 @@ export default function RootLayout({
   return (
     <ConvexClientProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={cn("font-sans antialiased", roboto.className)}>
+        <body className={cn("font-sans antialiased", inter.variable)}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

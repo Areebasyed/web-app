@@ -1,43 +1,50 @@
-// components/landing/Testimonials.tsx
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { QuoteIcon } from 'lucide-react'
 
 const testimonials = [
   {
     name: "Sarah L.",
-    role: "Freelance Designer",
-    content: "SkillSwap has been a game-changer for my freelance business. The platform is intuitive and the payment system is reliable.",
+    role: "Independent Contractor",
+    content: "BuildXpert has been a game-changer for my construction business. The platform is intuitive and the payment system is reliable.",
     avatar: "/path-to-avatar-1.jpg"
   },
   {
     name: "John D.",
-    role: "Small Business Owner",
-    content: "I've found amazing talent on SkillSwap. The real-time chat feature makes communication a breeze.",
+    role: "Construction Company Owner",
+    content: "I've found amazing talent on BuildXpert. The real-time chat feature makes communication with subcontractors a breeze.",
     avatar: "/path-to-avatar-2.jpg"
   }
 ]
 
 export default function Testimonials() {
   return (
-    <section className="bg-white dark:bg-gray-800">
-      <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
-        <div className="mx-auto max-w-screen-sm">
-          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Testimonials</h2>
-          <p className="mb-8 font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">Discover how SkillSwap is helping professionals and businesses grow.</p>
-        </div> 
-        <div className="grid mb-8 lg:mb-12 lg:grid-cols-2 gap-4">
+    <section className="py-16 bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl">
+            What Our Users Say
+          </h2>
+          <p className="mt-4 max-w-2xl text-xl text-muted-foreground mx-auto">
+            Discover how BuildXport is helping construction professionals and businesses grow.
+          </p>
+        </div>
+        <div className="grid gap-8 lg:grid-cols-2">
           {testimonials.map((testimonial, index) => (
-            <Card key={index}>
-              <CardHeader>
-                <Avatar>
+            <Card key={index} className="bg-card border-primary/10 hover:border-primary/30 transition-colors duration-300">
+              <CardHeader className="flex flex-row items-center gap-4 pb-4">
+                <Avatar className="w-16 h-16">
                   <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
                   <AvatarFallback>{testimonial.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
-                <CardTitle>{testimonial.name}</CardTitle>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</p>
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">{testimonial.name}</h3>
+                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                </div>
               </CardHeader>
-              <CardContent>
-                <p className="text-gray-500 dark:text-gray-400">{testimonial.content}</p>
+              <CardContent className="relative">
+                <QuoteIcon className="absolute top-0 left-0 w-8 h-8 text-primary/20" />
+                <p className="pl-10 text-muted-foreground italic">{testimonial.content}</p>
               </CardContent>
             </Card>
           ))}

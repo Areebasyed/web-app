@@ -1,18 +1,19 @@
-// components/landing/CTA.tsx
 import { Button } from "@/components/ui/button"
 import { SignUpButton } from "@clerk/nextjs"
 
 export default function CTA() {
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-        <div className="mx-auto max-w-screen-sm text-center">
-          <h2 className="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-gray-900 dark:text-white">Start Your Journey Today</h2>
-          <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">Join SkillSwap and unlock a world of opportunities. Whether you are looking to offer your skills or find the perfect service, we have got you covered.</p>
-          <Button className="bg-blue-500 hover:bg-blue-600 text-white dark:bg-blue-600 dark:hover:bg-blue-700" size={"lg"} variant={"outline"} asChild>
-         <SignUpButton mode='modal' />
-         </Button>
-        </div>
+    <section className="py-16 bg-primary/10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl mb-4">
+          Start Your Construction Journey Today
+        </h2>
+        <p className="text-xl text-muted-foreground mb-8">
+          Join BuildXport and unlock a world of opportunities in the construction industry. Whether you are looking to offer your skills or find the perfect service, we have got you covered.
+        </p>
+        <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+          <SignUpButton mode='modal'>Sign Up Now</SignUpButton>
+        </Button>
       </div>
     </section>
   )
