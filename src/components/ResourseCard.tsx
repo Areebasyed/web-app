@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { Id } from '../../convex/_generated/dataModel'
+import Image from 'next/image'
 
 interface Resource {
   name: string
@@ -23,11 +24,7 @@ export function ResourceCard({ resource }: { resource: Resource }) {
       <CardContent className="flex-grow flex flex-col">
         {getImageUrl && (
           <div className="mb-4 flex-grow">
-            <img 
-              src={getImageUrl} 
-              alt={resource.name} 
-              className="object-cover rounded-md"
-            />
+            <Image src={getImageUrl} alt={resource.name} width={500} height={500} className=" object-cover rounded-md"/>
           </div>
         )}
         <div>

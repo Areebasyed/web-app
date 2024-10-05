@@ -123,19 +123,6 @@ function renderServiceDetails(gig: SellerGig) {
 
 
 
-function ServiceSection({ title, items }: { title: string, items?: string[] }) {
-  if (!items || items.length === 0) return null
-  return (
-    <div>
-      <h3 className="text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-gray-200">{title}</h3>
-      <ul className="list-disc pl-5 space-y-1 text-gray-700 dark:text-gray-300">
-        {items.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-    </div>
-  )
-}
 
 function GigSkeleton() {
   return (

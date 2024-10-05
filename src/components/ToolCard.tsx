@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { Id } from '../../convex/_generated/dataModel'
+import Image from 'next/image'
 
 interface Tool {
   name: string
@@ -22,11 +23,7 @@ export function ToolCard({ tool }: { tool: Tool }) {
       <CardContent className="flex-grow flex flex-col">
         {getImageUrl && (
           <div className="mb-4 flex-grow">
-            <img
-              src={getImageUrl} 
-              alt={tool.name} 
-              className=" object-cover rounded-md"
-            />
+            <Image src={getImageUrl} alt={tool.name} width={500} height={500} className=" object-cover rounded-md"/>
           </div>
         )}
         <div>

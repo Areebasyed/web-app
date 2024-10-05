@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import Carousel from './ImageCarousel'
 
+import Image from 'next/image'
 
 interface CompleteService {
     teamMembers: {
@@ -54,7 +55,7 @@ const ResourceCard = ({ resource }: { resource: { name: string, quantity: number
       </CardHeader>
       <CardContent className="p-4">
         {imageUrl && (
-          <img src={imageUrl} alt={resource.name} className="w-full h-40 object-cover mb-4 rounded-md" />
+          <Image src={imageUrl} alt={resource.name} width={500} height={500} className="object-cover mb-4 rounded-md"  />
         )}
         <p className="text-sm text-gray-600 dark:text-gray-300">Quantity: {resource.quantity} {resource.unit}</p>
         <p className="text-sm font-medium text-gray-800 dark:text-gray-200">Price: ${resource.pricePerResource}/{resource.unit}</p>
@@ -75,7 +76,8 @@ const ToolCard = ({ tool }: { tool: { name: string, quantity: number, rentalPric
       </CardHeader>
       <CardContent className="p-4">
         {imageUrl && (
-          <img src={imageUrl} alt={tool.name} className="w-full h-40 object-cover mb-4 rounded-md" />
+                   <Image src={imageUrl} alt={tool.name} width={500} height={500} className="object-cover mb-4 rounded-md"  />
+
         )}
         <p className="text-sm text-gray-600 dark:text-gray-300">Quantity: {tool.quantity}</p>
         <p className="text-sm font-medium text-gray-800 dark:text-gray-200">Rental Price: ${tool.rentalPricePerTool}/tool</p>

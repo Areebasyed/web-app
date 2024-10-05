@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { Id } from '../../convex/_generated/dataModel';
+import Image from 'next/image';
 
 interface CarouselProps {
   imageIds: Id<"_storage">[];
@@ -25,10 +26,11 @@ const Carousel: React.FC<CarouselProps> = ({ imageIds }) => {
   return (
     <div className="relative w-full h-64 md:h-96 overflow-hidden rounded-lg">
       {imageUrl && (
-        <img
+        <Image
           src={imageUrl}
-          alt={`Slide ${currentIndex + 1}`}
-          className="w-full h-full object-cover transition-opacity duration-500"
+          alt="Image"
+          fill
+          className="object-cover"
         />
       )}
       <button
