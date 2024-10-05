@@ -3,6 +3,7 @@ import { SignInButton } from "@clerk/nextjs"
 import Image from 'next/image'
 
 export default function Hero() {
+  const imageSrc='/constructionWorker.jpg'
   return (
     <section className="relative overflow-hidden bg-background py-16 sm:py-24">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-background dark:from-primary/10 dark:to-background"></div>
@@ -25,7 +26,7 @@ export default function Hero() {
           <div className="mt-12 lg:mt-0 lg:w-1/2">
             <div className="relative">
               <Image 
-                src="/hero-image.jpg" 
+                src={imageSrc} 
                 alt="Construction workers" 
                 width={600} 
                 height={400} 
