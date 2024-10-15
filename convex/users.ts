@@ -139,3 +139,20 @@ export const updateUserStatusAsSeller = mutation({
 
 	}
 })
+
+
+// fetch User detail by its id using where clause in convex
+
+export const getUserById = query({
+	args: {
+		userId: v.id("users") ,
+	},
+	handler: async (ctx, args) => {
+		const user = await ctx.db
+			.query("users")
+			.filter((q) => q.eq(q.field("_id"), args.userId))
+			.unique();
+		return user
+	}
+})
+

@@ -22,13 +22,18 @@ import { ServiceCompleteSection } from '@/components/ServiceCompleteSection'
 
 export default function GigPage({ params }: { params: { id: string } }) {
   const searchParams = useSearchParams()
- 
   const { me } = useMe()
   const { toast } = useToast()
   const isSeller = searchParams.get('isSeller') === 'true' ? true : false
   const gigId = params.id as Id<"sellerGigs">
 
   const gig: SellerGig | undefined = useQuery(api.sellerGigs.getGigById, { gigId: gigId })
+  // console.log(gig)
+  const getSellerDetails = useQuery(api.users.getUserById, { userId: gig?.userId as Id<"users"> }) 
+ 
+
+  
+
   
   const gigChat = useQuery(api.chat.getChatByGigId, { gigId: gigId })
   const createChat = useMutation(api.chat.createChat)
@@ -76,7 +81,7 @@ export default function GigPage({ params }: { params: { id: string } }) {
               onClick={handleChatCreate}
               className="bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
             >
-              <MessageSquare className="mr-2 h-4 w-4" /> Chat with Seller
+              <MessageSquare className="mr-2 h-4 w-4" /> Chat with {getSellerDetails?.name} 
             </Button>
           )}
           {!isSeller && gig.serviceType === 'complete' && (
@@ -89,7 +94,7 @@ export default function GigPage({ params }: { params: { id: string } }) {
             <AssignOrderToolDialog gig={gig} buyerId={me?._id!} />
           )}
           {gigChat && (
-            <ChatPopup gigChatId={gigChat._id!} />
+            <ChatPopup sellerProfileImage={getSellerDetails?.profileImage as string} isSellerOnline={getSellerDetails?.isOnline as boolean}  sellerName={getSellerDetails?.name as string}   gigChatId={gigChat._id!} />
           )}
         </CardFooter>
       </Card>

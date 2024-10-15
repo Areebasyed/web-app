@@ -12,8 +12,8 @@ export default defineSchema({
 	  Asseller: v.optional(v.boolean()),
 	})
 	  .index("by_email", ["email"])
-	  .index("by_tokenIdentifier", ["tokenIdentifier"]),
-
+	  .index("by_tokenIdentifier", ["tokenIdentifier"])
+	  .index("by_isOnline", ["isOnline"]),
 	  sellerGigs: defineTable({
 		userId: v.id("users"),
 		title: v.string(),
